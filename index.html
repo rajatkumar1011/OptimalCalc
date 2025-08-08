@@ -464,7 +464,6 @@
             } finally {
                 submitProblemButton.disabled = false;
                 wordProblemInput.value = '';
-                // Clear status after a few seconds if it's not the loader
                 if (!modalStatus.querySelector('.loader')) {
                     setTimeout(() => { modalStatus.innerHTML = ''; }, 3000);
                 }
@@ -511,4 +510,3 @@
 
 </body>
 </html>
-
