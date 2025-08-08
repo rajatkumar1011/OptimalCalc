@@ -18,8 +18,27 @@
         body {
             font-family: 'Inter', sans-serif;
             background-color: #000000; /* Pitch black background */
-            overflow: hidden;
         }
+
+        /* Custom scrollbar for the whole page */
+        html::-webkit-scrollbar {
+            width: 8px;
+        }
+        html::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+        html::-webkit-scrollbar-thumb {
+            background: #4b5563;
+            border-radius: 10px;
+        }
+        html::-webkit-scrollbar-thumb:hover {
+            background: #6b7280;
+        }
+        html {
+            scrollbar-width: thin;
+            scrollbar-color: #4b5563 #0a0a0a;
+        }
+
 
         #background-canvas {
             position: fixed;
@@ -33,7 +52,7 @@
         .brand-label {
             position: fixed;
             top: 1.5rem;
-            left: 1.5rem;
+            left: 1.5rem; /* Moved back to the left */
             font-family: 'Roboto Mono', monospace;
             font-size: 1.25rem;
             font-weight: 500;
@@ -210,7 +229,7 @@
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
-<body class="flex flex-col items-center justify-center min-h-screen p-2 sm:p-4 text-white">
+<body class="flex flex-col items-center justify-center min-h-screen p-2 sm:p-4 text-white py-16">
 
     <canvas id="background-canvas"></canvas>
     <div class="brand-label">OptimalCalc</div>
@@ -284,7 +303,7 @@
             </a>
         </div>
     </footer>
-
+    
     <script>
         // --- Animated Background Logic ---
         const canvas = document.getElementById('background-canvas');
