@@ -56,8 +56,8 @@
             font-family: 'Roboto Mono', monospace;
             font-size: 1.25rem;
             font-weight: 500;
-            color: rgba(229, 231, 235, 0.7);
-            text-shadow: 0 0 8px rgba(56, 189, 248, 0.3);
+            color: #FFFFFF;
+            text-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
             z-index: 20;
         }
 
@@ -107,6 +107,7 @@
             transition: all 0.2s ease-in-out;
             background-color: transparent;
             border: 1px solid rgba(55, 65, 81, 0.7);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
         }
         
         .btn::before, .angle-mode::before {
@@ -123,6 +124,7 @@
 
         .btn:hover, .angle-mode:hover {
             border-color: rgba(96, 106, 123, 0.9);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.15);
         }
         .btn:active, .angle-mode:active { 
             transform: scale(0.95);
@@ -141,8 +143,8 @@
             transition: all 0.2s ease;
         }
         .ai-button:hover {
-             background: linear-gradient(to bottom, rgba(74, 222, 128, 0.6), rgba(74, 222, 128, 0.3));
-             border-color: rgba(74, 222, 128, 0.7);
+          background: linear-gradient(to bottom, rgba(74, 222, 128, 0.6), rgba(74, 222, 128, 0.3));
+          border-color: rgba(74, 222, 128, 0.7);
         }
         .ai-button:active {
             transform: scale(0.95);
@@ -393,6 +395,15 @@
             const tan=(x)=>{ if(angleMode==='DEG'&&Math.abs(x%180)===90)return Infinity; if(angleMode==='RAD'&&Math.abs(x%Math.PI)===Math.PI/2)return Infinity; return angleMode==='DEG'?Math.tan(x*Math.PI/180):Math.tan(x); };
             const log=Math.log10, ln=Math.log, sqrt=Math.sqrt;
             let evalExpression=currentExpression.replace(/×/g,'*').replace(/÷/g,'/').replace(/\^/g,'**').replace(/√/g,'sqrt').replace(/π/g,'Math.PI').replace(/e/g,'Math.E');
+            
+            // BUG FIX: Sanitize numbers to handle leading zeros (e.g., "01" becomes "1")
+            // This prevents errors in evaluation for inputs like "01+01".
+            const numberRegex = /[0-9]+(?:\.[0-9]*)?|\.[0-9]+/g;
+            evalExpression = evalExpression.replace(numberRegex, (numberStr) => {
+                // parseFloat correctly interprets "01" as 1, "007" as 7, etc.
+                return parseFloat(numberStr).toString();
+            });
+
             try {
                 const result=new Function('sin','cos','tan','log','ln','sqrt',`'use strict'; return ${evalExpression}`)(sin,cos,tan,log,ln,sqrt);
                 if(result===Infinity){display.value='TOO BIG!';currentExpression='';return;}
@@ -471,7 +482,7 @@
         }
         
         async function callGemini(prompt, retries = 3, delay = 1000) {
-            const apiKey = "AIzaSyBd5Nqt9n5RSbPBzDTAZ1LCBcIw52i4Zkg";
+            const apiKey = "AIzaSyBd5Nqt9n5RSbPBzDTAZ1LCBcIw52i4Zkg"; 
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
             
             const payload = {
@@ -510,3 +521,5 @@
 
 </body>
 </html>
+
+
