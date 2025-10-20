@@ -173,7 +173,7 @@ async function handleWordProblem() {
 }
 
 async function callGemini(prompt, retries = 3, delay = 1000) {
-    const apiKey = "AIzaSyBd5Nqt9n5RSbPBzDTAZ1LCBcIw52i4Zkg"; 
+    const apiKey = "AIzaSyDNbjiN8CrYVNnGAJiiwtbimWXkPf7TS8c"; 
     const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
     
     const payload = {
@@ -208,4 +208,5 @@ async function callGemini(prompt, retries = 3, delay = 1000) {
         }
     }
 }
+
 
